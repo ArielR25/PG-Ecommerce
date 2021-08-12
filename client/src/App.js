@@ -8,7 +8,7 @@ import { Details } from './components/details/details';
 function App() {
   return (
     <div className="App">
-      <Home />
+      <Home/>
       <Route path='/details' component = {Details} />
     </div>
   );

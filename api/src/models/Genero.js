@@ -3,7 +3,8 @@ const { Schema, model } = require('mongoose');
 const GeneroSchema = Schema({
     genero: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     }
 });
 
