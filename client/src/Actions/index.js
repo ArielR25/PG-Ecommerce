@@ -2,6 +2,7 @@ export const GET_BOOKS = 'GET_BOOKS';
 export const GET_GENDERS = 'GET_GENDERS';
 export const CREATE_BOOK = 'CREATE_BOOK';
 export const CREATE_GENDER = 'CREATE_GENDER';
+export const EDIT_BOOK = 'EDIT_BOOK'
 
 
 
@@ -26,10 +27,10 @@ export function getGenders(){
     };
 };
 
-export function createProduct(payload){
+export function createBook(payload){
 
     return async function (dispatch){
-        var book= await fetch('http://localhost:4000/productos',{
+        var book= await fetch('http://localhost:4000/productos/add',{
             method: 'POST',
             headers:{
                 'Accept': 'application/json',
@@ -44,16 +45,31 @@ export function createProduct(payload){
 
 export function createGender(payload){
     return async function(dispatch) {
-        var gender= await fetch('http://localhost:4000/generos',{
+        var gender= await fetch('http://localhost:4000/generos/add',{
             method: 'POST',
             headers:{
                 'Accept': 'application/json',
-                'Content-type': 'application/json; charset=utf-8'
+                'Content-Type': 'application/json',
             },
             body: JSON.stringify(payload)
         });
         const res= await gender.json();
         return dispatch({type:CREATE_GENDER, payload:res})
+    };
+};
+
+export function editBook(payload,id){
+    return async function(dispatch) {
+        var book= await fetch(`http://localhost:4000/productos/edit/${id}`,{
+            method: 'PUT',
+            headers:{
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(payload)
+        });
+        const res= await book.json();
+        return dispatch({type: EDIT_BOOK, payload:res})
     };
 };
 
