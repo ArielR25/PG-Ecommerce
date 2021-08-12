@@ -15,7 +15,7 @@ const dbConnection = async()=>{
         
     } catch (error) {
         console.log(error);
-        throw new Error ('error a la hora de conectar')
+        handleError(error)
     }
 }
 

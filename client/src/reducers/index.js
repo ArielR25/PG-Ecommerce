@@ -1,5 +1,7 @@
 import {
     GET_BOOKS,
+    FIND_BYCATEGORY,
+    DETAILS,
     GET_GENDERS,
     CREATE_GENDER,
     CREATE_BOOK,
@@ -14,34 +16,54 @@ const initialState = {
 }
 
 function rootReducer(state = initialState, action) {
-    var {type, payload}= action;
-    switch (type) {
+   
+    switch (action.type) {
         case GET_BOOKS:
             return{
                 ...state,
-                allBooks: payload,
-                filteredAllBooks: payload
+                allBooks: action.payload,
+                filteredAllBooks: action.payload
             }
+        case FIND_BYCATEGORY:
+            return{
+                ...state,
+                filteredAllBooks: state.filteredAllBooks.filter(book =>{
+
+                    for( let i=0 ; i < book.generos.length ; i++ ) {
+                        for( let j=0 ; j < action.payload.length ; j++ ) {
+                            if( book.generos[i] === action.payload[j] ) return true;
+                        }
+                    }
+                    return false;
+                })
+        }; 
+        case DETAILS:
+
+            return {
+            ...state,
+            details: allBooks.filter( book => book._id === action.payload)
+
+        }
         case GET_GENDERS:
             return{
                 ...state,
-                genders: payload
+                genders: action.payload
             }
         case CREATE_BOOK:
             return{
                 ...state,
-                allBooks: [payload,...state.allBooks],
+                allBooks: [action.payload,...state.allBooks],
             }
         case CREATE_GENDER:
             return{
                 ...state,
-                genders:[payload, ...state.genders]
+                genders:[action.payload, ...state.genders]
             }
         case EDIT_BOOK:
             return{
                 ...state,
-                allBooks:[payload, state.allBooks.filter(e=>e._id !== payload._id)],
-                filteredAllBooks: [payload, state.filteredAllBooks.filter(e=>e._id !== payload._id)]
+                allBooks:[action.payload, state.allBooks.filter(e=>e._id !== action.payload._id)],
+                filteredAllBooks: [action.payload, state.filteredAllBooks.filter(e=>e._id !== action.payload._id)]
             }
         default: return state
     }

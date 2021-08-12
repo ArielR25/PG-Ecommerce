@@ -1,6 +1,6 @@
 const { Router } = require('express');
 
-const Producto= require ('./book.js')
+const Producto= require ('./producto.js')
 const Genero = require ('./genero')
 
 
