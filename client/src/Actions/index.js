@@ -1,5 +1,9 @@
-import fetch from 'node-fetch';
 export const GET_BOOKS = 'GET_BOOKS';
+export const GET_GENDERS = 'GET_GENDERS';
+export const CREATE_BOOK = 'CREATE_BOOK';
+export const CREATE_GENDER = 'CREATE_GENDER';
+
+
 
 export function getAllBooks(){
     return function(dispatch){
@@ -11,6 +15,14 @@ export function getAllBooks(){
             payload:json
             })
         });
+    };
+};
+
+export function getGenders(){
+    return async function(dispatch) {
+        var genders= await fetch('http://localhost:4000/generos');
+            genders= await genders.json();
+        return dispatch({type:GET_GENDERS, payload:genders})
     };
 };
 
@@ -26,7 +38,7 @@ export function createProduct(payload){
             body: JSON.stringify(payload)
         })
         const res= await book.json();
-        return dispatch ({type: 'CREATE_PRODUCT', payload:res});
+        return dispatch ({type: CREATE_BOOK, payload:res});
     };
 };
 
@@ -41,6 +53,7 @@ export function createGender(payload){
             body: JSON.stringify(payload)
         });
         const res= await gender.json();
-        return dispatch({type:'CREATE_GENDER', payload:res})
+        return dispatch({type:CREATE_GENDER, payload:res})
     };
 };
+

@@ -1,13 +1,14 @@
-import React,{useState,useEffect} from 'react';
+import React,{useState} from 'react';
 import {useDispatch} from 'react-redux';
 import { useHistory } from "react-router-dom";
 
-import {createProduct} from '../../actions/actions'
+import {createProduct, createGender,getCategories} from '../../actions/actions'
 
 
 export default function Form (){
     const history= useHistory()
     const dispatch = useDispatch()
+    dispatch(getCategories())
     const [state, setstate] = useState({
         titulo:'',
         autor:'',
