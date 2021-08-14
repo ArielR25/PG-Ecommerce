@@ -1,7 +1,5 @@
-const { dbConnection } = require("../configDB/config");
 const Producto = require("../models/Producto");
 const { Router } = require("express");
-const mongoose = require("mongoose");
 const router = Router();
 
 

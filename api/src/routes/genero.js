@@ -1,9 +1,8 @@
 const { Router } = require("express");
 const router = Router();
-const { dbConnection } = require("../configDB/config");
 const Genero = require("../models/Genero");
 const Producto = require("../models/Producto");
-const mongoose = require("mongoose");
+
 
 
 router.get('/', async (req,res)=>{

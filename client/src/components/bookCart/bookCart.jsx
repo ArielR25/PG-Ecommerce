@@ -2,7 +2,7 @@ import React from "react";
 
 export default function BookCart({ titulo, autor, img, precio, count }) {
     
-  return (
+    return (
     <div className="libro">
         <div className="producto">
             <div>
@@ -22,5 +22,5 @@ export default function BookCart({ titulo, autor, img, precio, count }) {
         </div>
         <p>{count}</p>
     </div>
-  );
+    );
 }

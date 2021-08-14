@@ -22,18 +22,18 @@ export  default function Cart() {
     }
 
     return (
-        <div>
-            {!state ? 
-           ( 
-           <div>
-               <h3>Tu carrito está vacío</h3>
-                <p>¿No sabés qué comprar? ¡Miles de libros te esperan!</p>
+            <div>
+                {!state ? 
+            ( 
+            <div>
+                <h3>Tu carrito está vacío</h3>
+                    <p>¿No sabés qué comprar? ¡Miles de libros te esperan!</p>
+                </div>
+                )
+                : (
+                    arrayComponent
+                )
+            }
             </div>
-            )
-            : (
-                arrayComponent
-            )
-        }
-        </div>
-    )
-}
+        )
+    }

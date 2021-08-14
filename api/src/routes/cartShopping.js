@@ -1,6 +1,5 @@
 const { Router } = require("express");
-const { dbConnection } = require("../configDB/config");
-const mongoose = require("mongoose");
+
 
 const router = Router();
 
