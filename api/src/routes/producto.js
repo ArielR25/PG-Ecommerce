@@ -6,7 +6,6 @@ const router = Router();
 
 
 
-// dbConnection();
 
 router.get("/", async (req, res) => {
   var books = await Producto.find({});
