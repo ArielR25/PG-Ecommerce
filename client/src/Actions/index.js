@@ -121,7 +121,7 @@ export function clearCart(){
 
 export function addBuyUser (payload){
   return async function (dispatch) {
-    await fetch ('http://localhost:4000/productos/cart/', {
+      await fetch ('http://localhost:4000/productos/cart/', {
       method: 'POST',
       headers:{
         'Accept': 'application/json',
