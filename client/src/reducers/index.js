@@ -36,15 +36,8 @@ function rootReducer(state = initialState, action) {
         case FIND_BYCATEGORY:
             return{
                 ...state,
-                filteredAllBooks: state.filteredAllBooks.filter(book =>{
-
-                    for( let i=0 ; i < book.generos.length ; i++ ) {
-                        for( let j=0 ; j < action.payload.length ; j++ ) {
-                            if( book.generos[i] === action.payload[j] ) return true;
-                        }
-                    }
-                    return false;
-                })}; 
+                filteredAllBooks: state.allBooks.filter(e=> e.generos.includes(action.payload)) 
+            } 
 
         case DETAILS:
             return {

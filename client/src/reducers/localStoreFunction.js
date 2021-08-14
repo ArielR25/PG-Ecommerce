@@ -1,5 +1,5 @@
 export function localStore(items, action) {
-   var getCart=JSON.parse(window.localStorage.getItem("cart"))
+   let getCart=JSON.parse(window.localStorage.getItem("cart"))
    if(getCart===null){
        getCart={}
    }
