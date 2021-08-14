@@ -7,7 +7,7 @@ const router = Router();
 const Usuario = 'ira el usuario al crearlo'
 const Producto= require("../models/Producto");
 
-dbConnection();
+// dbConnection();
 
 //-----guarda la compra ya hecha en el usuario
 router.post('/',async (req,res)=>{

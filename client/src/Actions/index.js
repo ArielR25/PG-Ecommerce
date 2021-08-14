@@ -11,6 +11,7 @@ export const REMOVE_ONE_CART = 'REMOVE_ONE_CART';
 export const REMOVE_ALL_CART = 'REMOVE_ALL_CART';
 export const CLEAR_CART = 'CLEAR_CART';
 export const ADD_BUY_USER = 'ADD_BUY_USER';
+export const CHECKOUT_CART = 'CHECKOUT_CART';
 
 
 export function getAllBooks(){
@@ -133,7 +134,11 @@ export function addBuyUser (payload){
   };
 };
 
-
-
+export function checkoutCart(payload) {
+  return {
+    type : CHECKOUT_CART,
+    payload
+  }
+}
 
 

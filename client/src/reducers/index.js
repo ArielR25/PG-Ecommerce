@@ -11,7 +11,8 @@ import {
     REMOVE_ONE_CART,
     REMOVE_ALL_CART,
     CLEAR_CART,
-    ADD_BUY_USER
+    ADD_BUY_USER,
+    CHECKOUT_CART
 } from '../Actions/index';
 
 
@@ -20,7 +21,41 @@ const initialState = {
   filteredAllBooks: [],
   genders:[],
   details: {},
-  cart: {}
+  cart: {   
+        af503fcdf4238445cc8:{
+            generos: [
+                "Psicología"
+            ],
+            _id: "61140ae8af17563824915d08",
+            titulo: "Las fuerzas morales",
+            autor: "Jose Ingenieros",
+            editorial: "NoBooks Editorial",
+            descripcion: "Estamos especializados en publicar textos en español. Para encontrar mas títulos busque “NoBooks Editorial” o visite nuestra web http://www.nobooksed.com Contamos con mas volúmenes en español que cualquier otra editorial en formato electrónico y continuamos creciendo.",
+            fecha: "2011-11-01T03:00:00.000Z",
+            paginas: 166,
+            img: "http://books.google.com/books/content?id=tetSDAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+            idioma: "es",
+            precio: 169.72,
+            __v: 0,
+            stock: 76
+        },
+    af503fcdf4238445cc9: {
+      generos: [
+            "Psicología"
+        ],
+        _id: "61140af503fcdf4238445cc9",
+        titulo: "La locura en la argentina",
+        autor: "Jose Ingenieros",
+        editorial: "NoBooks Editorial",
+        fecha: "1937-01-01T03:00:00.000Z",
+        paginas: 196,
+        img: "http://books.google.com/books/content?id=jTxDDgAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+        idioma: "es",
+        precio: 169.72,
+        __v: 0,
+        stock: 45
+    }   
+   },
 };
 
 function rootReducer(state = initialState, action) {
@@ -95,7 +130,12 @@ function rootReducer(state = initialState, action) {
             return {
                 ...state,
                 cart: addBuyUser
-            }       
+            } 
+        case  CHECKOUT_CART:
+            return{
+                ...state,
+                cart: {...state.cart, direccion : action.payload}
+            }      
         default: return state
     }
 
