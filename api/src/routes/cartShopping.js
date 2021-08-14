@@ -1,8 +1,5 @@
 const { Router } = require("express");
-
-
 const router = Router();
-
 const Usuario = 'ira el usuario al crearlo'
 const Producto= require("../models/Producto");
 

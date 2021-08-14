@@ -120,25 +120,25 @@ export function clearCart(){
   }
 }
 
-export function addBuyUser (payload){
-  return async function (dispatch) {
-    var booksCart = await fetch ('http://localhost:4000/productos/cart/', {
-      method: 'POST',
-      headers:{
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(payload)
-    });
-    return dispatch ({type: ADD_CART})
+  export function addBuyUser (payload){
+    return async function (dispatch) {
+      var booksCart = await fetch ('http://localhost:4000/productos/cart/', {
+        method: 'POST',
+        headers:{
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload)
+      });
+      return dispatch ({type: ADD_CART})
+    };
   };
-};
 
-export function checkoutCart(payload) {
-  return {
-    type : CHECKOUT_CART,
-    payload
+  export function checkoutCart(payload) {
+    return {
+      type : CHECKOUT_CART,
+      payload
+    }
   }
-}
 
 
