@@ -1,10 +1,10 @@
 require("dotenv").config();
 const cors = require("cors");
 const express = require("express");
-const { dbConnection } = require("./src/configDB/config");
+const  dbConnection  = require("./src/configDB/config");
 
 const app = express();
-
+dbConnection();
 const routes = require("./src/routes/index");
 
 app.use(cors());
@@ -12,7 +12,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/", routes);
-dbConnection();
+
 //escuchar peticiones
 app.listen(4000, () => {
   console.log("Servidor corriento en el puerto 4000");

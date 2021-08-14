@@ -4,10 +4,10 @@ import { useHistory } from "react-router-dom";
 
 import {createBook, createGender} from '../../Actions/index'
 
-import Form from '../form/form'
+import Form from '../Form/Form'
 
 
-export default function CreateProducto(){
+export default function CreateProduct(){
     const dispatch = useDispatch()
 
     const history= useHistory()
@@ -42,7 +42,7 @@ export default function CreateProducto(){
 
 //----modifica el estado de los generos
     function handleGenders(e){
-        setArrGender(e)
+    setArrGender(e)
     }
 //-----optiene la url de la imagen cargada
     function processImage(e){
@@ -50,7 +50,7 @@ export default function CreateProducto(){
         const imageUrl = new FileReader();
         imageUrl.readAsDataURL(imageFile)
         imageUrl.onload=(e)=>{
-            setstate({...state, img: e.target.result, })
+        setstate({...state, img: e.target.result, })
         };
     };
 //------une todos los estado creando un obj y lo envia para el post, aca tambien se hace la creacion de genero
