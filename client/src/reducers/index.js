@@ -20,7 +20,7 @@ const initialState = {
   filteredAllBooks: [],
   genders:[],
   details: {},
-  cart: {}
+  cart: []
 };
 
 function rootReducer(state = initialState, action) {

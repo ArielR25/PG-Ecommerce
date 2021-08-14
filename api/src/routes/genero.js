@@ -24,7 +24,7 @@ router.post("/", async (req, res) => { /* add agregar */
 
   await newGenero.save();
 
-   /* mongoose.connection.close(); */
+  
 
   res.json(newGenero);
 
