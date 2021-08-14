@@ -24,11 +24,7 @@ router.post("/", async (req, res) => {
   try {
     const producto = new Producto(req.body);
     await producto.save();
-
-    
-
     res.status(201).send(producto);     
-
   } catch (error) {
     res.status(500).send({ok: false, msg:' nose pudo crear el producto'}); 
   }

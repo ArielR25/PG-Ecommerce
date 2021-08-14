@@ -9,25 +9,16 @@ dbConnection();
 
 router.get('/', async (req,res)=>{
   const resp= await Genero.find({},{"genero":1,"_id":0})    
-
   const arrayGeneros=resp.map(e=>e.genero)
-
   res.status(200).send(arrayGeneros)
-
-   /* mongoose.connection.close(); */
+  
 });
 
 router.post("/", async (req, res) => { /* add agregar */ 
   const { genero } = req.body;
-
   const newGenero = new Genero({ genero });
-
   await newGenero.save();
-
-  
-
   res.json(newGenero);
-
 });
 
 router.delete('/', async (req, res)=>{
