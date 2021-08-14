@@ -7,5 +7,4 @@ const router = Router();
 router.use("/productos", Producto);
 router.use("/generos", Genero);
 router.use("/cart", CartShopping)
-
 module.exports = router;

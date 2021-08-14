@@ -121,7 +121,7 @@ export function clearCart(){
 
 export function addBuyUser (payload){
   return async function (dispatch) {
-    var booksCart = await fetch ('http://localhost:4000/productos/cart/', {
+    await fetch ('http://localhost:4000/productos/cart/', {
       method: 'POST',
       headers:{
         'Accept': 'application/json',
@@ -129,8 +129,7 @@ export function addBuyUser (payload){
       },
       body: JSON.stringify(payload)
     });
-    const res= await booksCart.json();
-    return dispatch ({type: ADD_BOOK_CART, payload:res})
+    return dispatch ({type: ADD_CART})
   };
 };
 

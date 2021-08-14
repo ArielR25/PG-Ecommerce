@@ -1,3 +1,4 @@
+import {localStore} from './localStoreFunction'
 import {
     GET_BOOKS,
     FIND_BYCATEGORY,
@@ -19,7 +20,7 @@ const initialState = {
   filteredAllBooks: [],
   genders:[],
   details: {},
-  cart: []
+  cart: {}
 };
 
 function rootReducer(state = initialState, action) {
@@ -72,37 +73,36 @@ function rootReducer(state = initialState, action) {
                 allBooks:[action.payload, state.allBooks.filter(e=>e._id !== action.payload._id)],
                 filteredAllBooks: [action.payload, state.filteredAllBooks.filter(e=>e._id !== action.payload._id)]
             }
-            case ADD_CART:
-                if(state.cart.length>1) {
-                   var book= state.cart.findIndex(e=>e._id===action.payload._id)
-                   book && state.cart[book].count++
-                }
-                return{
-                    ...state,
-                    cart: book? state.cart : [{...action.payload, count: 1}, ...state.cart]
-                }
-            case REMOVE_ONE_CART:
-                var book= state.cart.findIndex(e=>e._id===action.payload)
-                state.cart[book].count-1 !== 0 && state.cart[book].count-1
-                return{
-                    ...state,
-                    cart: state.cart[book].count-1 === 0 ? state.cart.filter(e=> e._id !== action.payload) : state.cart
-                }
-            case REMOVE_ALL_CART:
-                return{
-                    ...state,
-                    cart: state.cart.filter(e=> e._id !== action.payload)
-                }
-            case CLEAR_CART:
-                return {
-                    ...state,
-                    cart: []
-                }
-            case ADD_BUY_USER:
-                return {
-                    ...state,
-                    cart:[]
-                }       
+        case ADD_CART:
+            const addCart= localStore(action.payload,'add')
+            return{
+                ...state,
+                cart: addCart
+            }
+        case REMOVE_ONE_CART:
+            const removeOneCart=localStore(action.payload, 'subtract')
+            return{
+                ...state,
+                cart: removeOneCart
+            }
+        case REMOVE_ALL_CART:
+            const removeAllCart = localStore( action.payload, 'delete')
+            return{
+                ...state,
+                cart: removeAllCart
+            }
+        case CLEAR_CART:
+            const clearCart = localStore( 'clear', 'clear')
+            return {
+                ...state,
+                cart: clearCart
+            }
+        case ADD_BUY_USER:
+            const addBuyUser = localStore( 'clear', 'clear')
+            return {
+                ...state,
+                cart: addBuyUser
+            }       
         default: return state
     }
 

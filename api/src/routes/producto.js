@@ -25,7 +25,7 @@ router.post("/", async (req, res) => {
     const producto = new Producto(req.body);
     await producto.save();
 
-    mongoose.connection.close();
+    // mongoose.connection.close();
 
     res.status(201).send(producto);     
 
