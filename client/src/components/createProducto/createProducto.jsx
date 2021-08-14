@@ -4,10 +4,10 @@ import { useHistory } from "react-router-dom";
 
 import {createBook, createGender} from '../../Actions/index'
 
-import Form from '../form/form'
+import Form from '../form/form.jsx'
 
 
-export default function CreateProducto (){
+export default function CreateProducto(){
     const dispatch = useDispatch()
 
     const history= useHistory()
