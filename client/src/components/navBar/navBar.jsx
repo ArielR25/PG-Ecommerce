@@ -1,16 +1,17 @@
 
 import React, { useEffect, useState } from "react";
-
 import { useDispatch} from "react-redux";
 import {orderBooks } from "../../Actions/index";
-
+import './navBar.css'
 import {MdMenu, MdShoppingCart, MdAccountCircle} from "react-icons/md";
 import { BiSearchAlt } from "react-icons/bi";
-import './navBar.css'
+import { NavLink } from "react-router-dom"; 
+
+
 
 export default function NavBar() {
 
-    const dispatch = useDispatch()
+  const dispatch = useDispatch()
 
     let leftBarState = false;
 
@@ -55,8 +56,10 @@ export default function NavBar() {
     setState({ ...state, [e.target.id]: e.target.value });
   };
 
+  
  useEffect(() => {
          dispatch(orderBooks(state.select))
+         // eslint-disable-next-line
       }, [state.select])
       
  
@@ -94,7 +97,10 @@ export default function NavBar() {
                     
                </div>
     <div className="titulo_principal">
-            <h1>B-Comm</h1>
+      <NavLink  className="titulo_b" to={'/'}>
+      <h1>B-Comm</h1>
+      </NavLink>
+            
         </div>  
         
         
