@@ -90,7 +90,7 @@ export function createGender(payload){
 
 export function categoryFilter(generos){
     return{
-        type: FIND_BYCATEGORY,
+        type:FIND_BYCATEGORY,
         payload:generos
     };
 };
@@ -101,4 +101,5 @@ export function getDetails(data){
         payload: data
     })
 }
+
 
