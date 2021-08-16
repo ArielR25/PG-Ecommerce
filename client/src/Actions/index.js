@@ -13,6 +13,7 @@ export const ADD_BUY_USER = 'ADD_BUY_USER';
 export const FILTER_CLEAR =   'FILTER_CLEAR'
 export const ORDER_BOOKS =   'ORDER_BOOKS'
 export const FILTER_BOOK = 'FILTER_BOOK'
+export const CHECKOUT_CART = 'CHECKOUT_CART';
 
 export function getAllBooks(){
     return function(dispatch){
@@ -49,13 +50,7 @@ export function createBook(payload){
   };
 };
 
-export function categoryFilter(generos){
-  return{
-      type: FIND_BYCATEGORY,
-      payload:generos
-      
-  };
-};
+
 
 export function filterClear(){
   return{
@@ -112,56 +107,13 @@ export function addCart (id){
     return dispatch({type:ADD_CART, payload:book})
   };
 };
-export function orderBooks(orden, catalogo) {
-  if (orden === "A-Z") {
-    catalogo.sort((a, b) => {
-      if (a.titulo < b.titulo) {
-        return -1;
-      }
-      if (a.titulo > b.titulo) {
-        return 1;
-      }
-      return 0;
-    });
-  }
-  if (orden === "Z-A") {
-    catalogo.sort((b, a) => {
-      if (a.titulo < b.titulo) {
-        return -1;
-      }
-      if (a.titulo > b.titulo) {
-        return 1;
-      }
-      return 0;
-    });
-  }
-  if (orden === "Mayor_Precio") {
-    catalogo.sort((b, a) => {
-      if (a.precio < b.precio) {
-        return -1;
-      }
-      if (a.precio > b.precio) {
-        return 1;
-      }
-      return 0;
-    });
-  }
-  if (orden === "Menor_Precio") {
-    catalogo.sort((a, b) => {
-      if (a.precio < b.precio) {
-        return -1;
-      }
-      if (a.precio > b.precio) {
-        return 1;
-      }
-      return 0;
-    });
-  }
-  return {
-    type : ORDER_BOOKS,
-    payload: catalogo
+export function orderBooks(orden){
+  return{
+    type: ORDER_BOOKS,
+    payload:orden
   }
 }
+
 
 export function removeOneCart(id){
   return {
@@ -182,9 +134,30 @@ export function clearCart(){
   }
 }
 
+export function addBuyUser (payload){
+  return async function (dispatch) {
+    await fetch ('http://localhost:4000/productos/cart/', {
+      method: 'POST',
+      headers:{
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload)
+    });
+    return dispatch ({type: ADD_CART})
+  };
+};
+
+export function checkoutCart(payload) {
+  return {
+    type : CHECKOUT_CART,
+    payload
+  }
+}
+
 export function filterBook(genero) {
   return {
-    type: FILTER_BOOK,
+    type:FIND_BYCATEGORY,
     payload: genero,
   }
 }

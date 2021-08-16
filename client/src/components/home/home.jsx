@@ -1,95 +1,96 @@
-import "./home.css";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+
 import { getAllBooks, getGenders, filterBook, filterClear } from "../../Actions/index";
+import { useCambio } from "../../reducers/Orden&Cambios";
+
 import Producto from "../producto/producto";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
-import undraw from "../../img/undraw.svg"
 
+import "./home.css";
 
 export function Home () {
+
     const dispatch = useDispatch()
-    const filteredAllBooks = useSelector((state) => state.filteredAllBooks);
-    const orderBooks = useSelector((state) => state.orderBooks)
-    const filterBooks = useSelector((state) => state.filterBooks)
+    var filteredAllBooks = useSelector((state) => state.filteredAllBooks);
+
+    const cambios = useSelector ((state)=>state.cambios)
     const genders = useSelector((state) => state.genders)
 
-console.log(filterBooks);
-    const [filter, setFilter] = useState([]);
+    const [librosIniciales, setlibrosIniciales]=useState(0)
+    const [currentPage, setCurrentPage] = useState(0);
+
+    const card= 20
+    const cambiar= useCambio()
 
     useEffect(() => {
         dispatch(getAllBooks())
         dispatch(getGenders())
-        dispatch(filterBook()) 
-        dispatch(filterClear()) 
-    },[dispatch,orderBooks])
+    },[dispatch])
 
+    useEffect(() => {
+      setlibrosIniciales([...filteredAllBooks].splice(0,20))
+    }, [filteredAllBooks,cambios])
+
+    useEffect(() => {
+      filteredAllBooks=cambiar
+    }, [cambios]);
 
     const typesFilter = (e) => {
-      
-      setFilter({ ...filter, [e.target.id]: e.target.value });
       dispatch(filterBook(e.target.id));
     };
 
-  const [currentPage, setCurrentPage] = useState(0);
-  var librosIniciales = orderBooks.length !== 0 ? orderBooks.slice(currentPage, currentPage + 20) : filteredAllBooks.slice(currentPage, currentPage + 20);
-
   const nextPage = () => {
-    setCurrentPage(currentPage + 20);
+    const totalElementos= filteredAllBooks.length
+    const next= currentPage +1
+    const index= next * card
+
+    if(index>=totalElementos) return;
+
+    setlibrosIniciales([...filteredAllBooks].splice(index,card))
+    setCurrentPage(next)
   };
   const prevPage = () => {
-    if (currentPage > 0) setCurrentPage(currentPage - 20);
+    const prev= currentPage-1
+
+    if(prev < 0) return;
+
+    const index= prev * card
+
+    setlibrosIniciales([...filteredAllBooks].splice(index,card))
+    setCurrentPage(prev)
   };
 
-function categoryClear(e){
+  function categoryClear(e){
     e.preventDefault()
     dispatch(filterClear())
-  
-}
-
-
-  
-
-  if (filterBooks.length > 0)
+  }
   return (
     <div className="home">
         <div className='principalHome'>
-         <div className="carousel">
-           <img src={undraw} alt="imagenPresentacion" className="imagenPresentacion"></img>
-           <div className="titulos_carousel">
-    <h2>Bienvenido Usuario!!</h2><h4>Compra tus libros esenciales aquí</h4>
-      </div>
-           </div>
           <div className="e_books"><h1>E-Books</h1></div>
-
           <div className="paginado">
             {currentPage > 0 ? (
               <button className="botonPrev" onClick={prevPage}>
                 <MdKeyboardArrowLeft/>
               </button>
             ) : null}
-            {currentPage < 80 ? (
+            {currentPage < 4 ? (
               <button className="botonNext" onClick={nextPage}>
                 <MdKeyboardArrowRight/>
               </button>
             ) : null}
           </div>
-          <div className="botones_generos">
-          <div className="box_generos">
+          
+          <div>
             {genders.map((gen) => (
-          <button id={gen} className="generos" onClick={typesFilter}>{gen}</button>
+          <button id={gen}className="generos" onClick={typesFilter}>{gen}</button>
             )
             )}
-            
+             <button id='cleanButton' className='cleanButton' onClick={categoryClear}>Limpiar filtro</button>
           </div>
-          {filterBooks.length > 0 ? 
-              <button id='cleanButton' className='cleanButton' onClick={categoryClear}>Limpiar filtro</button>
-              : null }
-    
-          </div>
-          
             <div className="books">
-              {filterBooks.map((e, index) => (
+              {librosIniciales.length>0 &&  librosIniciales.map((e, index) => (
                 <Producto
                   key={index + 1}
                   titulo={e.titulo}
@@ -103,54 +104,7 @@ function categoryClear(e){
           </div>
         </div>
       );
-  return (
-<div className="home">
-    <div className='principalHome'>
-    
-    <div className="carousel"> <img src={undraw} alt="imagenPresentacion" className="imagenPresentacion"></img>
-    <div className="titulos_carousel">
-    <h2>Bienvenido Usuario!!</h2><h4>Compra tus libros esenciales aquí</h4>
-      </div>
-      </div>
-      <div className="e_books"><h1>E-Books</h1></div>
-      <div className="paginado">
-        {currentPage > 0 ? (
-          <button className="botonPrev" onClick={prevPage}>
-            <MdKeyboardArrowLeft/>
-          </button>
-        ) : null}
-        {currentPage < 80 ? (
-          <button className="botonNext" onClick={nextPage}>
-            <MdKeyboardArrowRight/>
-          </button>
-        ) : null}
-      </div>
-      
-      <div className="box_generos">
-        {genders.map((gen) => (
-      <button id={gen}className="generos" onClick={typesFilter}>{gen}</button>
-      
-        )
-        )}
-       
-      </div>
 
-
-        <div className="books">
-          {librosIniciales.map((e, index) => (
-            <Producto
-              key={index + 1}
-              titulo={e.titulo}
-              img={e.img}
-              autor={e.autor}
-              precio={e.precio}
-              id={e._id}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
-  );
 }
 
 

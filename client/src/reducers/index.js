@@ -7,24 +7,24 @@ import {
     CREATE_BOOK,
     EDIT_BOOK,
     ADD_CART,
-    // REMOVE_ONE_CART,
+    REMOVE_ONE_CART,
     REMOVE_ALL_CART,
     CLEAR_CART,
     ADD_BUY_USER,
+    CHECKOUT_CART,
     FILTER_CLEAR,
     ORDER_BOOKS,
-    FILTER_BOOK
 } from '../Actions/index';
-
+import {localStore} from './localStoreFunction'
+import { ordernar } from './Orden&Cambios';
 
 const initialState = {
     allBooks: [],
     filteredAllBooks: [],
-    filterBooks: [],
     genders:[],
-    orderBooks: [],
     details: {},
-    cart: []
+    cart: {},
+    cambios: ''
 
 };
 
@@ -43,22 +43,13 @@ function rootReducer(state = initialState, action) {
             
             return{
                 ...state,
-                filteredAllBooks: state.filteredAllBooks.filter( book => {
-                    for( let i=0 ; i<book.generos.length ; i++ ) {
-                        for( let j=0 ; j<action.payload.length ; j++ ) {
-                            if( book.generos[i] === action.payload[j] ) return true;
-                        }
-                    }
-                    return false;
-                })
+                filteredAllBooks: state.allBooks.filter(e=> e.generos.includes(action.payload))
             }; 
-            case FILTER_CLEAR:
-                return{
-                    ...state,
-                    filterBooks: [],
-                }
-            
-
+        case FILTER_CLEAR:
+            return{
+                ...state,
+                filteredAllBooks: state.allBooks,
+            }
         case DETAILS:
             return {
             ...state,
@@ -76,9 +67,11 @@ function rootReducer(state = initialState, action) {
                 allBooks: [action.payload,...state.allBooks],
             }
         case ORDER_BOOKS:
+            const ordenBooks= ordernar(action.payload,state.filteredAllBooks)
             return{
                 ...state,
-                orderBooks: action.payload,
+                filteredAllBooks: ordenBooks,
+                cambios:action.payload
             }
         case CREATE_GENDER:
             return{
@@ -93,43 +86,40 @@ function rootReducer(state = initialState, action) {
 
             }
             case ADD_CART:
-                if(state.cart.length>1) {
-                    var book= state.cart.findIndex(e=>e._id===action.payload._id)
-                    book && state.cart[book].count++
-                }
+                const addCart= localStore(action.payload,'add')
                 return{
                     ...state,
-                    cart: book? state.cart : [{...action.payload, count: 1}, ...state.cart]
+                    cart: addCart
                 }
-            // case REMOVE_ONE_CART:
-            //     var book= state.cart.findIndex(e=>e._id===action.payload)
-            //     state.cart[book].count-1 !== 0 && state.cart[book].count-1
-            //     return{
-            //         ...state,
-            //         cart: state.cart[book].count-1 === 0 ? state.cart.filter(e=> e._id !== action.payload) : state.cart
-            //     }
+            case REMOVE_ONE_CART:
+                const removeOneCart=localStore(action.payload, 'subtract')
+                return{
+                    ...state,
+                    cart: removeOneCart
+                }
             case REMOVE_ALL_CART:
+                const removeAllCart = localStore( action.payload, 'delete')
                 return{
                     ...state,
-                    cart: state.cart.filter(e=> e._id !== action.payload)
+                    cart: removeAllCart
                 }
             case CLEAR_CART:
+                const clearCart = localStore( 'clear', 'clear')
                 return {
                     ...state,
-                    cart: []
+                    cart: clearCart
                 }
             case ADD_BUY_USER:
+                const addBuyUser = localStore( 'clear', 'clear')
                 return {
                     ...state,
-                    cart:[]
-                }   
-            case FILTER_BOOK:
-                return {
+                    cart: addBuyUser
+                } 
+            case  CHECKOUT_CART:
+                return{
                     ...state,
-                    filterBooks: state.filteredAllBooks.filter((book) => {
-                        return book.generos.some((t) => t=== action.payload);
-                      }),
-                }    
+                    cart: {...state.cart, direccion : action.payload}
+                }       
         default: return state
     }
 
