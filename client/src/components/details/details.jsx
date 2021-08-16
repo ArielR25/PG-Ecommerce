@@ -2,14 +2,13 @@ import './details.css';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from "react-router";
-import { getDetails, url } from '../../Actions';
+import { getDetails, url,addCart, createBook } from '../../Actions';
 
 export default function Details() {
 
     const dispatch = useDispatch();
     const details = useSelector((state) => state.details);
     const { id } = useParams();
-
     useEffect(() => {
         dispatch(getDetails(id));
         dispatch(url(window.location.href))
@@ -22,9 +21,11 @@ export default function Details() {
         <div className='details'>
         <div className="img_stock">
         <img className="imagen_detail" src={img} alt={`imagen de portada del libro: ${titulo}`} />
+        <button onClick={()=>dispatch(addCart(id))}>Comprar</button> 
         <div className='stock'>
             <p>Stock:</p>
             <p>{stock}</p>
+           
         </div>
         </div>
         <div className="contenido_details">

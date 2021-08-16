@@ -1,7 +1,7 @@
 import "./home.css";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllBooks, getGenders, filterBook, filterClear, url } from "../../Actions/index";
+import { getAllBooks, getGenders, filterBook, filterClear, url, seeCart } from "../../Actions/index";
 import Producto from "../producto/producto";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 import undraw from "../../img/undraw.svg"
@@ -20,6 +20,7 @@ export function Home () {
         dispatch(getAllBooks())
         dispatch(getGenders())
         dispatch(url(window.location.href)) 
+        dispatch(seeCart())
     },[dispatch])
 
 

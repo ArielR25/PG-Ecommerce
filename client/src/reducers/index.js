@@ -1,3 +1,4 @@
+import {localStore} from './localStoreFunction.js'
 import {
     GET_BOOKS,
     FIND_BYCATEGORY,
@@ -7,7 +8,7 @@ import {
     CREATE_BOOK,
     EDIT_BOOK,
     ADD_CART,
-    // REMOVE_ONE_CART,
+    REMOVE_ONE_CART,
     REMOVE_ALL_CART,
     CLEAR_CART,
     ADD_BUY_USER,
@@ -16,6 +17,7 @@ import {
     FILTER_BOOK,
     SEARCH_BOOK,
     URL,
+    SEE_CART
 } from '../Actions/index';
 
 
@@ -26,7 +28,7 @@ const initialState = {
     genders:[],
     orderBooks: [],
     details: {},
-    cart: [],
+    cart: {},
     book: undefined,
     url: "",
     forRender:0
@@ -91,6 +93,7 @@ function rootReducer(state = initialState, action) {
             return{
                 ...state,
                 allBooks: [action.payload,...state.allBooks],
+                filteredAllBooks: [action.payload,...state.filteredAllBooks]
             }
 
         case ORDER_BOOKS:
@@ -170,39 +173,45 @@ function rootReducer(state = initialState, action) {
             }
 
             case ADD_CART:
-                if(state.cart.length>1) {
-                    var book= state.cart.findIndex(e=>e._id===action.payload._id)
-                    book && state.cart[book].count++
-                }
+                const addCart= localStore(action.payload,'add')
                 return{
                     ...state,
-                    cart: book? state.cart : [{...action.payload, count: 1}, ...state.cart]
+                    cart: addCart
                 }
 
-            // case REMOVE_ONE_CART:
-            //     var book= state.cart.findIndex(e=>e._id===action.payload)
-            //     state.cart[book].count-1 !== 0 && state.cart[book].count-1
-            //     return{
-            //         ...state,
-            //         cart: state.cart[book].count-1 === 0 ? state.cart.filter(e=> e._id !== action.payload) : state.cart
-            //     }
+            case REMOVE_ONE_CART:
+                const removeOneCart=localStore(action.payload, 'subtract')
+                return{
+                    ...state,
+                    cart:removeOneCart
+                }
 
             case REMOVE_ALL_CART:
+                const removeAllCart = localStore( action.payload, 'delete')
                 return{
                     ...state,
-                    cart: state.cart.filter(e=> e._id !== action.payload)
+                    cart: removeAllCart
+                }
+            case SEE_CART:
+                const seeCart = localStore('see','see')
+
+                return{
+                    ...state,
+                    cart:seeCart
                 }
 
             case CLEAR_CART:
+                const clearCart = localStore( 'clear', 'clear')
                 return {
                     ...state,
-                    cart: []
+                    cart: clearCart
                 }
 
             case ADD_BUY_USER:
+                const addBuyUser = localStore( 'clear', 'clear')
                 return {
                     ...state,
-                    cart:[]
+                    cart:addBuyUser
                 }   
 
             case FILTER_BOOK:

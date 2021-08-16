@@ -1,12 +1,12 @@
 
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllBooks, getGenders, orderBooks,searchByName} from "../../Actions/index";
+import { getAllBooks, getGenders, orderBooks,searchByName, seeCart} from "../../Actions/index";
 import './navBar.css'
 import {MdMenu, MdShoppingCart, MdAccountCircle} from "react-icons/md";
 import { BiSearchAlt } from "react-icons/bi";
 import { NavLink } from "react-router-dom"; 
-
+import Cart from '../cart/cart'
 
 
 
@@ -15,6 +15,7 @@ export default function NavBar() {
     const dispatch = useDispatch()
     const orderAllBooks = useSelector((state) => state.filteredAllBooks);
     const url = useSelector((state) => state.url);
+    const carts = useSelector((state)=>state.cart)
 
 
     useEffect(() => {
@@ -45,7 +46,7 @@ export default function NavBar() {
     function rightBarFunction(){
       
       let rightNavBar = document.getElementById('rightNavBar');
-      
+      <Cart />
     
       if( rightBarState ){
         
@@ -134,20 +135,21 @@ export default function NavBar() {
         value={busqueda}
         onChange={handleChange}/>
         </div>
-            
-            
-            
+        <div style={{marginLeft:'10%'}}>
+          <NavLink to='/add' style={{textDecoration:'none'}}><h3 className="search">Agregar Libro</h3></NavLink>
+        </div>
+    
         <div className="icono_Usuario">
         <MdAccountCircle/>
         </div>
         
         </div>
             <div id='rightNavBarButton' className="rightNavBarButton" onClick={ rightBarFunction }>
-            <MdShoppingCart className="icono_nav_der"/> <span className="numero_icono">0</span>
+            <MdShoppingCart className="icono_nav_der"/> <span className="numero_icono">{Object.values(carts).length}</span>
   
             </div>           
             <div id ="rightNavBar">
-            
+              <Cart />
             </div>
         </div>
   

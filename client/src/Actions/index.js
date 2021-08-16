@@ -16,6 +16,7 @@ export const FILTER_BOOK = 'FILTER_BOOK'
 export const SEARCH_BOOK = 'SEACRH_BOOK'
 export const URL = "URL";
 export const CHECKOUT_CART = 'CHECKOUT_CART';
+export const SEE_CART = 'SEE_CART'
 
 
 export function getAllBooks(){
@@ -121,11 +122,18 @@ export function editBook(payload,id){
 
 export function addCart (id){
   return async function(dispatch) {
-    var book= await fetch(`http://localhost:4000/productos/cart/${id}`);
+    var book= await fetch(`http://localhost:4000/cart/${id}`);
         book= await book.json();
     return dispatch({type:ADD_CART, payload:book})
   };
 };
+
+export function seeCart(){
+  return{
+    type: SEE_CART
+  }
+}
+
 export function orderBooks(orden ) {
   
   return {
@@ -152,6 +160,20 @@ export function clearCart(){
     type : CLEAR_CART
   }
 }
+
+export function addBuyUser (payload){
+  return async function (dispatch) {
+    await fetch ('http://localhost:4000/productos/cart/', {
+      method: 'POST',
+      headers:{
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload)
+    });
+    return dispatch ({type: ADD_CART})
+  };
+};
 
 export function filterBook(genero) {
   return {

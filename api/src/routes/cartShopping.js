@@ -24,7 +24,6 @@ router.get('/:idProducto',async (req,res)=>{
 
     var book = await Producto.findById(idProducto)
     book = await Producto.findByIdAndUpdate({"_id":idProducto},{"stock":book.stock-1},{new:true})
-
     res.send(book)
 })
 
