@@ -29,7 +29,7 @@ export default function CreateProducto(){
         stock:''
     });
 //-----estado para colocar los multiples generos
-    const [arrGender, setArrGender]= useState(['perro','gato'])
+    const [arrGender, setArrGender]= useState([])
 //-----array para colocar los multiples generos
 
 //------modifica el estado principal
@@ -60,7 +60,8 @@ export default function CreateProducto(){
         arrGender.forEach(element => {
             if (genderAll.indexOf(element.value) === -1)dispatch(createGender(element.value))
         });
-        dispatch(createBook({...state,generos:arrGender}))
+        const generosValue= arrGender.map(e=>e.value)
+        dispatch(createBook({...state,generos:generosValue}))
         setstate({
             titulo:'',
             autor:'',
