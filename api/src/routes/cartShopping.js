@@ -19,13 +19,13 @@ router.post('/',async (req,res)=>{
 });
 
 //------busca el libro, cambia el stock y lo envia al front para el carrito
-router.get('/:idProducto',async (req,res)=>{
-    const {idProducto}= req.params
+    router.get('/:idProducto',async (req,res)=>{
+        const {idProducto}= req.params
 
-    var book = await Producto.findById(idProducto)
-    book = await Producto.findByIdAndUpdate({"_id":idProducto},{"stock":book.stock-1},{new:true})
-    res.send(book)
-})
+        var book = await Producto.findById(idProducto)
+        book = await Producto.findByIdAndUpdate({"_id":idProducto},{"stock":book.stock-1},{new:true})
+        res.send(book)
+    })
 
 
 module.exports = router;

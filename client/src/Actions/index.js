@@ -120,13 +120,13 @@ export function editBook(payload,id){
   };
 };
 
-export function addCart (id){
-  return async function(dispatch) {
-    var book= await fetch(`http://localhost:4000/cart/${id}`);
-        book= await book.json();
-    return dispatch({type:ADD_CART, payload:book})
+  export function addCart (id){
+    return async function(dispatch) {
+      var book= await fetch(`http://localhost:4000/productos/cart/${id}`);
+          book= await book.json();
+      return dispatch({type:ADD_CART, payload:book})
+    };
   };
-};
 
 export function seeCart(){
   return{

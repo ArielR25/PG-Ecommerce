@@ -1,12 +1,12 @@
 
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllBooks, getGenders, orderBooks,searchByName, seeCart} from "../../Actions/index";
+import { getAllBooks, getGenders, orderBooks,searchByName} from "../../Actions/index";
 import './navBar.css'
 import {MdMenu, MdShoppingCart, MdAccountCircle} from "react-icons/md";
 import { BiSearchAlt } from "react-icons/bi";
 import { NavLink } from "react-router-dom"; 
-import Cart from '../cart/cart'
+
 
 
 
@@ -46,7 +46,7 @@ export default function NavBar() {
     function rightBarFunction(){
       
       let rightNavBar = document.getElementById('rightNavBar');
-      <Cart/>
+      
     
       if( rightBarState ){
         
@@ -149,7 +149,7 @@ export default function NavBar() {
   
             </div>           
             <div id ="rightNavBar">
-              <Cart/>
+              
             </div>
         </div>
   
