@@ -2,7 +2,7 @@ import './details.css';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from "react-router";
-import { getDetails, url,addCart, createBook } from '../../Actions';
+import { getDetails,url,addCart,createBook } from '../../Actions';
 
 export default function Details() {
 

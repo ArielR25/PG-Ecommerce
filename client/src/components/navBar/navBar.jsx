@@ -46,7 +46,7 @@ export default function NavBar() {
     function rightBarFunction(){
       
       let rightNavBar = document.getElementById('rightNavBar');
-      <Cart />
+      <Cart/>
     
       if( rightBarState ){
         
@@ -149,7 +149,7 @@ export default function NavBar() {
   
             </div>           
             <div id ="rightNavBar">
-              <Cart />
+              <Cart/>
             </div>
         </div>
   
