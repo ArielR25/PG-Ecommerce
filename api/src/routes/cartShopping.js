@@ -9,7 +9,7 @@ const {validarJWTAdmin,validarJWTUser} = require ('../middleware/validarJWT');
 
 //-----guarda la compra ya hecha en el usuario y en la base de datos general que seria para el adm
 //-----ruta para user y admin
-router.post('/',validarJWTUser, validarJWT, async (req,res)=>{
+router.post('/',validarJWTUser, async (req,res)=>{
     const orden= new Orden(req.body);
     orden.user=req.uid
     await orden.save();

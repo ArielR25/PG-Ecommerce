@@ -5,7 +5,7 @@ import NavBar from "./components/navBar/navBar";
 import './App.css';
 import React from 'react';
 import CreateProducto from './components/createProducto/createProducto'
-import checkCart from './components/checkCart/checkCart'
+import checkCart from './components/cart/checkCart/checkCart'
 import EditProduct from './components/editProducto/editProducto'
 
 

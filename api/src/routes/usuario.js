@@ -54,7 +54,7 @@ router.get('/historyShopping',validarJWTUser, async(req,res)=>{
 //-----trae los detalles de una orden en especifico
 //-----info de producto, cantidas,direccion de entrga y info de usuario de compa
 //-----recibe id de orden por params,para user
-router.get('/see/:id',validarJWTUser, (req,res)=>{
+router.get('/see/:id',validarJWTUser, async(req,res)=>{
     const {idOrden}=req.params
     const history= await Orden.findById(idOrden)
                               .populate('productos.producto',['titulo','precio'])
