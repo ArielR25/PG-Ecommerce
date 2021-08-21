@@ -22,13 +22,12 @@ const UsuarioSchema = Schema({
     },
     documento: {
         type: Number,
-        unique: true
     },   
     direcciones: {
         type: Array
     },
     historialDeCompras:[{
-        orde:{
+        orden:{
             type: Schema.Types.ObjectId,
             ref: 'Orden',
         }

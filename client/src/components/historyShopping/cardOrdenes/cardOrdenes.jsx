@@ -6,7 +6,7 @@ export default function CardOrdenes({props}){
 
     return (
         <div>
-            <Link exact to={`/ordenes/detail/${_id}`}><h2>compra</h2></Link>
+            <Link to={`/orden/detail/${_id}`}><h2>compra</h2></Link>
             <p>N° de compra {_id}</p>
             <div>
                 <p>{`${user.nombre} ${user.apellido}`}</p>

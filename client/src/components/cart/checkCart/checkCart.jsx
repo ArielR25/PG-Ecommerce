@@ -3,11 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import {useHistory} from 'react-router-dom'
 import {IoMdRemoveCircleOutline, IoMdAddCircleOutline, IoIosCloseCircle } from "react-icons/io";
 import swal from 'sweetalert';
-import {addCart,removeAllCart, clearCart, removeOneCart} from '../../../Actions/index'
+import {addCart,removeAllCart, addBuyUser, removeOneCart} from '../../../Actions/index'
 import {CardElement,useElements, useStripe} from "@stripe/react-stripe-js"
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
-import { generarPago } from './post';
 
 const stripePromise = loadStripe("pk_test_51JQAouFWmGEeX4odlkQmbhbHUp3CKtVyX8x3IAZOECCAv0E7LUzOZJoUyBS8C5LTiPBgpQNd3ZdNb2oBfZeRZFCR00fcFxXLfG")
 
@@ -25,14 +24,6 @@ export default function CheckCart(){
         arrayCart.push(carts[i])
         precioTotal+=carts[i].precio*carts[i].count
     }
-
-    function comprar(){
-        swal("purchase made!", "you will receive an email soon", "success");
-        dispatch(clearCart())
-        history.push('/')
-    }
-
-    const titulo = arrayCart.map(e=> e.titulo)
     
     const Payment = () => {
 
@@ -49,12 +40,13 @@ export default function CheckCart(){
         if(!error) {
            const {id} = paymentMethod;
            let pago = {
-           id,
-           user_id: "611eb9fe31ebcebc18555759",
-           valorTotal: Math.round(precioTotal + precioTotal * 0.5),
-           description: titulo,
+            ...carts,
+            medioPago:id
         }
-        generarPago(pago)
+        let token= window.localStorage.getItem('token')
+        dispatch(addBuyUser(pago,token))
+        swal("purchase made!", "you will receive an email soon", "success");
+        history.push('/')
         
           
         } else {
@@ -90,7 +82,6 @@ export default function CheckCart(){
                 <p>iva: {(Math.round(precioTotal * 0.5))}</p>
                 <p>Total: {(Math.round(precioTotal + precioTotal * 0.5))}</p>
             </div>
-            <button onClick={()=>comprar()}>Pagar</button>
             
             <Elements stripe={stripePromise}>
             <Payment/>

@@ -17,7 +17,10 @@ import {
     FILTER_BOOK,
     SEARCH_BOOK,
     URL,
-    SEE_CART
+    SEE_CART,
+    GET_ORDENES,
+    ORDEN_DETAIL,
+    FILTRAR_ORDENES
 } from '../Actions/index';
 
 
@@ -31,8 +34,9 @@ const initialState = {
     cart: {},
     book: undefined,
     url: "",
-    forRender:0
-
+    forRender:0,
+    ordenes:[],
+    ordenDetail:{}
 };
 
 
@@ -230,7 +234,21 @@ function rootReducer(state = initialState, action) {
                     ...state,
                     url: action.payload
                 }       
-
+            case GET_ORDENES:
+                return{
+                    ...state,
+                    ordenes:action.payload
+                }
+            case ORDEN_DETAIL:
+                return{
+                    ...state,
+                    ordenDetail:action.payload
+                }
+            case FILTRAR_ORDENES:
+                return{
+                    ...state,
+                    ordenes: state.ordenes.filter(e=>e.estado===action.payload)
+                }
         default: return state
     }
 

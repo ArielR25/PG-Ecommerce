@@ -22,7 +22,7 @@ const OrdenSchema = Schema({
         type: String,
         required: true
     },
-    pago:{
+    medioPago:{
         type: String,
         required: true,
         unique: true

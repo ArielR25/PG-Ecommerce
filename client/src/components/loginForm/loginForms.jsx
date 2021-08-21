@@ -18,10 +18,7 @@ export default function LoginForms  ({isOpen, closeModal,payload}){
         const handleSumbit =  async (e) => {
             e.preventDefault();
             const a =  await dispatch(userLogin(data))
-            window.localStorage.setItem("token", a.token)
-            console.log(a.token)
-            /* dispatch(userLogin(data)) */
-
+            window.localStorage.setItem("token", a)
             
         }
 
@@ -57,7 +54,7 @@ export default function LoginForms  ({isOpen, closeModal,payload}){
                     <input  placeholder="username" name="email" onChange={handleChange} value={data.username}/>
                     <h1 className="loginPass">Contraseña</h1>
                     <input placeholder="password" name="password" type="password" onChange={handleChange} value={data.password}/>
-                    <input id="buttonInput"  type="submit" className="logginBtn" value ="Logueate" />
+                    <input id="buttonInput"  type="submit" className="logginBtn"  />
                 </form>
 
                {/*  google button  */}

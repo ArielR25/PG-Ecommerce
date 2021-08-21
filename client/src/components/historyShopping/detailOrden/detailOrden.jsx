@@ -12,7 +12,7 @@ export default function DetailOrdenAdmin (){
     const dispatch = useDispatch()
     const {id } = useParams();
     const state = useSelector(state => state.ordenDetail)
-
+    const {admin}=payloadJWT()
     const{user,productos}=state
 
     var opcion1=[{ value:'cancelada',label:'cacelada'},{ value:'procesando',label:'procesando'}]
@@ -22,15 +22,15 @@ export default function DetailOrdenAdmin (){
 
     useEffect(() => {
         dispatch(getOrdenesID(id))
-    }, [])
+    }, [dispatch,id])
     return (
         <div>
             { state.user ?(<div>
-                <div>
+               { admin && <div>
                     <h2>Datos del comprador</h2>
                     <p>{`${user.nombre} ${user.apellido}`}</p>
                     <p>{`${user.email}`}</p>
-                </div>
+                </div>}
                 <div>
                     <h2>Datos de la compra</h2> 
                     <label>N° de compra: {state._id}</label>
@@ -54,10 +54,10 @@ export default function DetailOrdenAdmin (){
                 </div>
                 <div>
                     <p>estado del pedido: {state.estado}</p>
-                    {/* {token.admin===true && (<Select
+                   {admin && <Select
                         options={state.estado==='creada'? opcion1 : opcion2}
                         onChange={(e)=>dispatch(updateOrden(e.value,state._id))}
-                    />)} */}
+                    />}
                 </div>
             </div>):(<p>Cargando...</p>)}
         </div>

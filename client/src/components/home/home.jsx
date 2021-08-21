@@ -122,7 +122,7 @@ function categoryClear(e){
               : null }
           </div>
             <div className="books">
-              {!filteredAllBooks.length ? <img className="img_carga" src={gif_carga} atl="Cargando..."/> :(
+              {!filteredAllBooks.length ? <img className="img_carga" src={gif_carga} alt="Cargando..."/> :(
                 librosIniciales.map((e, index) => (
                   <Producto
                     key={index + 1}
