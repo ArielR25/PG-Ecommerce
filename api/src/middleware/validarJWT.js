@@ -41,7 +41,6 @@ const validarJWTUser= (req,res,next)=>{
         req.uid=uid
         req.nombre=nombre
         req.admin=admin
-       
     next()
     } catch (error) {
         return res.status(401).json({ok:false,msg:'No hay token en la peticion'})
