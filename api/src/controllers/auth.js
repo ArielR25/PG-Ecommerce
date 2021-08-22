@@ -40,7 +40,7 @@ const loginUser = async (req, res=response)=>{
         const validarPassword= bcrypt.compareSync( password, user.password)
         !validarPassword? res.status(400).send({msg:'correo o password incorrectos'}): res.status(200).send({token})
     } catch (error) {
-
+        res.send(error)
     }
 }
 
