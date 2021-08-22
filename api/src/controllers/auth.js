@@ -19,7 +19,7 @@ const createUser = async(req, res=response)=>{
 
         await user.save()
 
-        const token = await generarJWT (user.id,user.nombre,user.admin)
+        const token = await generarJWT (user._id,user.nombre,user.admin)
 
         res.status(201).send(token)
 
