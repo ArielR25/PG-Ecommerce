@@ -4,7 +4,7 @@ const {CLAVE_TOKEN} = process.env
 
 const validarJWTAdmin= (req,res,next)=>{
     
-    const token = req.header('x-token');
+    let token = req.header('x-token');
     
     
     if (!token){
@@ -29,8 +29,8 @@ const validarJWTAdmin= (req,res,next)=>{
 
 const validarJWTUser= (req,res,next)=>{
     
-    const token = req.header('x-token');
-    
+    let token = req.header('x-token');
+
     
     if (!token){
         return res.status(401).json({ok:false,msg:'No hay token en la peticion'})
@@ -45,11 +45,11 @@ const validarJWTUser= (req,res,next)=>{
         req.nombre=nombre
         req.admin=admin
        
-
+    next()
     } catch (error) {
         return res.status(401).json({ok:false,msg:'No hay token en la peticion'})
     }
-    next()
+
 }
 
 

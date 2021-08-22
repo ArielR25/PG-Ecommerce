@@ -14,23 +14,23 @@ const stripe = new Stripe("sk_test_51JQAouFWmGEeX4od3qJjkwW2cdTVunEMWXE9PgKcNaz0
 //-----guarda la compra ya hecha en el usuario y en la base de datos general que seria para el adm
 //-----ruta para user y admin
 router.post('/',validarJWTUser, async (req,res)=>{
-   
+        const {pago, valorTotal} = req.body;
+        console.log(req.body)
     try {
-        const {medioPago, valorTotal} = req.body;
-
-        await stripe.paymentIntents.create({
+    
+    await stripe.paymentIntents.create({
 
             amount: valorTotal, 
             currency: "USD",
-            payment_method: medioPago,
+            payment_method: pago,
             confirm: true
         })
         var compra= {...req.body,estado:'creada'}      
-        var res= 'ok'  
+        var respuesta= 'ok'  
     }
     catch (error){
         var compra= {...req.body,estado:'cancelada'}
-        var res='pago rechazado'
+        var respuesta='pago rechazado'
     }
     finally{
         const orden= new Orden(compra);
@@ -38,7 +38,7 @@ router.post('/',validarJWTUser, async (req,res)=>{
         orden.user=id
         await orden.save();
         await Usuario.findByIdAndUpdate(id, {$push:{"historialDeCompras": orden}})
-        res.send({ok:res})
+        res.send({ok:respuesta})
     }
 });
 //------busca el libro, cambia el stock y lo envia al front para el carrito

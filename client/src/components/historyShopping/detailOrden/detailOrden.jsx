@@ -12,6 +12,7 @@ export default function DetailOrdenAdmin (){
     const dispatch = useDispatch()
     const {id } = useParams();
     const state = useSelector(state => state.ordenDetail)
+    let token= window.localStorage.getItem('token')
     const {admin}=payloadJWT()
     const{user,productos}=state
 
@@ -56,7 +57,7 @@ export default function DetailOrdenAdmin (){
                   <p>estado del pedido: {state.estado}</p>
                    {admin && <Select
                         options={state.estado==='creada'? opcion1 : opcion2}
-                        onChange={(e)=>dispatch(updateOrden(e.value,state._id))}
+                        onChange={(e)=>dispatch(updateOrden(e.value,state._id,token))}
                     />}
                 </div>
             </div>):(<p>Cargando...</p>)}

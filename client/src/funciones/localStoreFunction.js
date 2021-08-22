@@ -8,7 +8,7 @@
             if(getCart[`a${items._id}`]){
                 getCart[`a${items._id}`].count+=1
             }else{
-                getCart[`a${items._id}`]=items
+                getCart[`a${items._id}`]={...items,id:items._id}
                 getCart[`a${items._id}`].count=1
             } 
         }else if(action==='subtract'){

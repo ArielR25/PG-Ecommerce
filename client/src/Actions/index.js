@@ -19,8 +19,6 @@ export const SEE_CART = 'SEE_CART'
 export const GET_ORDENES = 'GET_ORNDES';
 export const ORDEN_DETAIL = 'ORDEN_DETAIL';
 
-export const FILTRAR_ORDENES = 'FILTRAR_ORDENES'
-
 
 export function getAllBooks(){
     return function(dispatch){
@@ -174,7 +172,7 @@ export function clearCart(payload){
 
 export function addBuyUser (payload,token){
   return async function (dispatch) {
-    await fetch ('http://localhost:4000/productos/cart/', {
+    await fetch ('http://localhost:4000/cart', {
       method: 'POST',
       headers:{
         'x-token': token,
@@ -183,6 +181,7 @@ export function addBuyUser (payload,token){
       },
       body: JSON.stringify(payload)
     });
+
     return dispatch ({type: CLEAR_CART})
   };
 };
@@ -201,9 +200,17 @@ export function url(url) {
     payload: url,
   }
 };
-export function getOrdenes(){
+export function getOrdenes(token){
   return async function(dispatch) {
-    let ordenes= await fetch('http://localhost:4000/orden');
+    let ordenes= await fetch('http://localhost:4000/orden',{
+      method:'GET',
+      headers:{
+        'x-token':token,
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      }
+    });
+
         ordenes= await ordenes.json();
     return dispatch({type:GET_ORDENES, payload:ordenes})
   };
@@ -232,11 +239,12 @@ export function getOrdenesUser(token){
     };
 };
 
-export function updateOrden(state,id){
+export function updateOrden(state,id,token){
   return async function (dispatch) {
     let updateState= await fetch (`http://localhost:4000/orden/${state}/${id}`, {
-        method: 'post',
+        method: 'POST',
         headers:{
+          'x-token': token,
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         }
@@ -246,9 +254,3 @@ export function updateOrden(state,id){
     };
 };
 
-export function filtrarOrdenes(estado){
-  return{
-    type: FILTRAR_ORDENES,
-    payload:estado
-  };
-};

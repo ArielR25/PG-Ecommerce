@@ -20,7 +20,6 @@ const OrdenSchema = Schema({
     },
     direccion:{
         type: String,
-        required: true
     },
     pago:{
         type: String,

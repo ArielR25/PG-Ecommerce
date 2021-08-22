@@ -15,7 +15,7 @@ router.get('/', validarJWTAdmin, async (req,res)=>{
 //-----info de producto, cantidas,direccion de entrga y info de usuario de compa
 //-----recibe id de orden por params, solo para admin
 
-router.get('/:idOrden',validarJWTUser, async (req,res)=>{
+router.get('/:idOrden', async (req,res)=>{
     const {idOrden}=req.params
     const history= await Orden.findById(idOrden)
                               .populate('user',['nombre','apellido','email'])

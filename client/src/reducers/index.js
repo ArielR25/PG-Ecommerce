@@ -18,8 +18,7 @@ import {
     URL,
     SEE_CART,
     GET_ORDENES,
-    ORDEN_DETAIL,
-    FILTRAR_ORDENES
+    ORDEN_DETAIL
 } from '../Actions/index';
 
 
@@ -235,11 +234,6 @@ function rootReducer(state = initialState, action) {
                     ...state,
                     ordenDetail:action.payload
                 }
-            case FILTRAR_ORDENES:
-                return{
-                    ...state,
-                    ordenes: state.ordenes.filter(e=>e.estado===action.payload)
-                }  
         default: return state
     }
 

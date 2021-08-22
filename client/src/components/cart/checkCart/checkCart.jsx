@@ -24,6 +24,11 @@ export default function CheckCart(){
         arrayCart.push(carts[i])
         precioTotal+=carts[i].precio*carts[i].count
     }
+    var compras=[]
+    for (const i in carts) {
+        compras.push({producto:carts[i].id,cantidad:carts[i].count})
+        precioTotal+=carts[i].precio*carts[i].count
+    }
 
     const titulo = arrayCart.map(e=> e.titulo)
     
@@ -41,16 +46,15 @@ export default function CheckCart(){
         })
         if(!error) {
            const {id} = paymentMethod;
-           let pago = {
-           id,
-           user_id: "611eb9fe31ebcebc18555759",
-           valorTotal: Math.round(precioTotal + precioTotal * 0.5),
-           description: titulo,
+           const pago = {
+            productos:compras,
+            valorTotal:Math.round(precioTotal),
+            pago:id
         }
-        let token= window.localStorage.getItem('token')
+  
+        const token= window.localStorage.getItem('token')
         dispatch(addBuyUser(pago,token))
-        swal("purchase made!", "you will receive an email soon", "success");
-        history.push('/')
+
         
           
         } else {

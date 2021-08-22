@@ -7,6 +7,8 @@ import React from 'react';
 import CreateProducto from './components/createProducto/createProducto'
 import checkCart from './components/cart/checkCart/checkCart'
 import EditProduct from './components/editProducto/editProducto'
+import HistoryShopping from './components/historyShopping/historyShopping'
+import DetailOrden from './components/historyShopping/detailOrden/detailOrden'
 
 
 function App() {
@@ -18,6 +20,8 @@ function App() {
       <Route path= '/add' component={CreateProducto} />
       <Route path= '/check' component={checkCart} />
       <Route path= '/edit/:id' component={EditProduct} />
+      <Route exact path='/ordenes' component={HistoryShopping} />
+      <Route path='/ordenes/detail/:id' component={DetailOrden} />
     </div>
   );
 }

@@ -19,7 +19,7 @@ const createUser = async(req, res=response)=>{
 
         await user.save()
 
-        const token = await generarJWT (user._id,user.nombre,user.admin)
+        const token = await generarJWT (user.id,user.nombre,user.admin)
 
         res.status(201).send(token)
 
@@ -33,14 +33,14 @@ const loginUser = async (req, res=response)=>{
 
     try {
         let user = await Usuario.findOne ({email});
-       
+
         if(!user) return res.status(400).send({ok:false, msg:'el usuario no existe'})
-        const token = await generarJWT (user._id,user.nombre,user.admin)
-       
+        const token = await generarJWT (user.id,user.nombre,user.admin)
+
         const validarPassword= bcrypt.compareSync( password, user.password)
-         !validarPassword? res.status(400).send({msg:'correo o password incorrectos'}): res.status(200).send(token)
+        !validarPassword? res.status(400).send({msg:'correo o password incorrectos'}): res.status(200).send({token})
     } catch (error) {
-        res.send(erro)
+
     }
 }
 
