@@ -1,9 +1,10 @@
 import React,{useEffect, useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
-import {getOrdenesUser, getOrdenes} from '../../Actions/index'
+import {getOrdenesUser, getOrdenes, filtrarOrdenes} from '../../Actions/index'
 import { payloadJWT } from '../../funciones/payloadJWT'
 import CardOrdenes from './cardOrdenes/cardOrdenes'
 import Select from 'react-select';
+import CardOrdenes from './cardOrdenes/cardOrdenes'
 
 export default function HistoryShopping(){
     const token= window.localStorage.getItem('token')

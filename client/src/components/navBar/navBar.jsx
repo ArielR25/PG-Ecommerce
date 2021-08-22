@@ -4,10 +4,11 @@ import { getAllBooks, getGenders, orderBooks,searchByName} from "../../Actions/i
 import './navBar.css'
 import {MdMenu, MdShoppingCart, MdAccountCircle} from "react-icons/md";
 import { BiSearchAlt } from "react-icons/bi";
-import { NavLink } from "react-router-dom"; 
+import {  NavLink } from "react-router-dom"; 
 import Cart from '../cart/cart'
 import LoginForms  from "../loginForm/loginForms.jsx"; 
-
+import { logaut } from "../../funciones/logaut";
+import RegisterForm from "../registerForm/registerForm";
 
 
 export default function NavBar() {
@@ -16,7 +17,10 @@ export default function NavBar() {
     const orderAllBooks = useSelector((state) => state.filteredAllBooks);
     const url = useSelector((state) => state.url);
     const carts = useSelector((state)=>state.cart);
+    /* const a = payloadJWT() */
+    const token = window.localStorage.getItem("token")
 
+    
     useEffect(() => {
         dispatch(getAllBooks())
         dispatch(getGenders())
@@ -91,6 +95,16 @@ export default function NavBar() {
         setIsOpenModal(false)
       }
 
+      /* POP-UP DE REGISTRO */
+      const[isOpenRegisModal, setOpenRegisModal] = useState(false);
+      const openRegisModal = () => {
+        setOpenRegisModal(true)
+      }
+      
+      const closeRegisModal = () => {
+        setOpenRegisModal(false)
+      }
+
   return (
   <div className="nav_principal">
     <div>
@@ -148,21 +162,24 @@ export default function NavBar() {
           <div id='loginNavBarbutton' className="loginNavBarbutton" onClick={ loginBarFunction }>
           <MdAccountCircle/>
           </div>
-          <div id ="loginNavBar">
-            <button onClick={openModal} className="userLoginButton">Accede!</button>
+          
+          <div>
+            <div id ="loginNavBar">
+            {!token ? (<button onClick={openModal} className="userLoginButton">Accede!</button>):
+            (<button onClick={logaut} className="userLoginButton"> Cerrar Sesion </button>)}
             <LoginForms 
             isOpen = {isOpenModal}
             closeModal = {closeModal}
             />
-
-
-            <button className="userLoginButton">Resgistrate!</button>
-            
+            {!token ? (<button className="userLoginButton" onClick={openRegisModal}>Registrate!</button>) : null }
+              <RegisterForm
+              isOpen = {isOpenRegisModal}
+              closeModal = {closeRegisModal}
+              />
             </div>
-          
-          
-
+          </div>
         </div>
+
       
         </div>
             <div id='rightNavBarButton' className="rightNavBarButton" onClick={ rightBarFunction }>
