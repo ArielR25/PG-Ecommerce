@@ -60,12 +60,13 @@ router.post( '/sendemail', async (req , res) => {
         
         await transporter.sendMail({
             from: '"Mario Emporio Henry" <marioemporiohenry@gmail.com>',
+            subject: 'Recuperacion de contraseña',
             to: user.email,
             text: `Ingrese el siguiente código para recuperar su contraseña: ${randomCode}`
         })
         return res.status(200).send({msg: 'Código de recuperación enviado con exito'})
     } catch {
-        res.status(400).send({msg: 'Ocurrio un error intentelo mas tarde'})
+        res.status(400).send({msg: 'El correo electronico no es valido'})
     }
     }   
 )
@@ -81,7 +82,7 @@ router.post( '/recoverpass', async (req , res) => {
             return res.status(400).send({msg: 'El código ingresado no es correcto'})
         }
     }catch{
-        res.status(400).send({msg: 'Ocurrio un error intentelo mas tarde'})
+        res.status(400).send({msg: 'Sh ocurrido un error inesperado'})
     }
     }   
 )
