@@ -1,6 +1,7 @@
 .promo_vigente {
     background-color: #f8f7f7;
-    height: 34rem;
+    height: 100%;
+    
 }
 .promo_vigente_titulo {
     color: #413e3e;
@@ -10,12 +11,14 @@
 .promos_vigentes {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
+    
 }
 .promo_card {
     border-radius: 10px;
     width: 30rem;
     margin: auto;
     background-color: #d4cfcf50;
+    margin-bottom: 2rem;
 }
 .promo_card_fecha p {
     color: #413e3e;     

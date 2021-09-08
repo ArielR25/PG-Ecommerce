@@ -66,5 +66,41 @@
 .producto_descuento:hover {
   background-color: seagreen;
 }
+.add_fav_red {
+  border: none;
+  font-size: 2rem;
+  background-color: rgb(233, 233, 233);
+  position: absolute;
+  cursor: pointer;
+  color: red;
+  margin-left: -6rem;
+  
+  
+}
+.add_fav_gris {
+  border: none;
+  font-size: 2rem;
+  background-color: rgb(233, 233, 233);
+  position: absolute;
+  cursor: pointer;
+  color: #413e3e;
+  margin-left: -6rem;
+}
+
+.eliminar_fav {
+  border: none;
+  font-size: 1.4rem;
+  margin-left: 5rem;
+  margin-top: 0.5rem;
+  background-color: rgb(233, 233, 233);
+  position: absolute;
+  cursor: pointer;
+  color: #413e3e;
+  
+}
+.eliminar_fav:hover {
+  color: red;
+}
+
 
 

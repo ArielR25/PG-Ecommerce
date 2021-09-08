@@ -7,7 +7,7 @@
 }
 .detalles_izq {
     border-radius: 10px;
-    height: 28rem;
+    height: 32rem;
     margin-left: 2rem;
     background-color: white;
   
@@ -211,4 +211,24 @@ background-color: #666666;
 .btn_Eliminar:hover {
 cursor: pointer;
 background-color: rgb(199, 7, 7);
+}
+.precios_descuento {
+    display: flex;
+}
+.precio_promo {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #413e3e;
+    margin-left: 0.5rem;
+   
+}
+.precio_numero_tachado {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #413e3e;
+    text-decoration: line-through;
+}
+.ahorro {
+    color: seagreen;
+    font-weight: bold;
 }

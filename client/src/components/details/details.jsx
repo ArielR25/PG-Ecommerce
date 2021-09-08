@@ -2,7 +2,7 @@ import './details.css';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from "react-router";
-import { getDetails, url, addCart, seeCart} from '../../Actions';
+import { getDetails, url, addCart, seeCart, getPromos} from '../../Actions';
 import { NavLink } from 'react-router-dom';
 import ReviewForm from './review/reviewForm/reviewForm';
 import gif_carga from "../../img/libros_paginas.gif";
@@ -12,6 +12,11 @@ import {useHistory} from 'react-router-dom';
 import { deleteBook } from '../../funciones/delete';
 // import { MdCompareArrows } from 'react-icons/md';
 
+
+
+
+
+
 export default function Details() {
     
     const dispatch = useDispatch();
@@ -19,6 +24,52 @@ export default function Details() {
     const { id } = useParams();
     const history= useHistory()
     var token=window.localStorage.getItem('token')
+    const promo = useSelector((state) => state.promo);
+    
+
+    
+    if(promo.length > 0) {
+        var fechaInicio = promo.map(e=> e.fechaInicio.split('T')[0])
+        
+        
+    }
+
+   var date = new Date();
+   date=date.toISOString().split('T')[0]
+   
+
+   if(details.generos) {
+
+    
+    function validarPromo ()  {  
+    var promoValidate = {
+        validate: false,
+    };
+    promo.forEach(p => { 
+        p.genero.forEach(genero=> {
+            
+            details.generos.forEach(gen=> {
+                
+                if(gen === genero) {
+                    if(date >= p.fechaInicio.split('T')[0] && date <= p.fechaFinal.split('T')[0]) {
+                        promoValidate = {
+                           validate: true,
+                           descuento: p.porcentaje 
+                        };
+                        
+                    }  
+                }
+            })
+        })
+    })
+    return promoValidate;
+
+    }
+    var promoValida = validarPromo();
+    
+    console.log(promoValida)
+}
+
 
     const { titulo, autor, editorial, descripcion, fecha, paginas, generos, img, idioma, stock, precio, _id, review } = details;
         
@@ -28,6 +79,7 @@ export default function Details() {
         dispatch(getDetails(id));
         dispatch(url(window.location.href))
         dispatch(seeCart())
+        dispatch(getPromos())
     }, [dispatch, id]);
     
     function comprarBoton(){
@@ -127,8 +179,23 @@ export default function Details() {
                         <p className="editorial_der">{editorial}</p>
                     </div>
                     <div className='precio_detalle'>
+                        
+                        {promoValida.validate === false ?
+                        <div>
+                        
+                        <p className="precio_numero">{precio}</p> 
+                        </div> 
+                       :
+                       <div>
+                        <div className="precios_descuento">
                         <p className="precio_peso">$</p>
-                        <p className="precio_numero">{precio}</p>
+                        <p className="precio_promo">{(Math.round(precio - (precio * (promoValida.descuento / 100))))}</p>
+                        </div>
+                        <p className="precio_numero_tachado">$ {precio}</p>
+                        <p className="ahorro">Ahorras: ${Math.round(precio * (promoValida.descuento / 100))}</p>
+                        </div>
+                        }
+                        
                     </div>
                     <div className='stock'>
                         <p className={stock<= 0? "stock_vacio": "stock_unidad"}>{stock<=0? "No hay unidades disponibles":`Quedan ${stock} unidades`}</p>

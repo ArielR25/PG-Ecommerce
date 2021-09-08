@@ -22,7 +22,8 @@ export function Home () {
     const inputBooks = useSelector((state) => state.inputBooks)
     const promo = useSelector(state => state.promo)
     const token = window.localStorage.getItem('token')
-
+    
+   
 
     const [filter, setFilter] = useState([]);
 

@@ -1,20 +1,50 @@
-import React from "react";
-import {useDispatch } from "react-redux";
-import {deleteWhishlist, postWhishlist} from "../../Actions";
+import React,{ useEffect} from "react";
+import {useDispatch, useSelector } from "react-redux";
+import {deleteWhishlist, postWhishlist, getWhishlist} from "../../Actions";
 import "./producto.css";
 import { NavLink } from "react-router-dom";
 import {payloadJWT} from '../../funciones/storage/payloadJWT'
+import {IoIosCloseCircle } from "react-icons/io";
 
 export default function Producto({ titulo, autor, img, precio, id, stock, promo}) {
   const dispatch = useDispatch()
   const token= window.localStorage.getItem('token')
   var user= payloadJWT()
+  const wishlist = useSelector(state => state.whishlist)
+ 
+
+
+useEffect(() => {
+  dispatch(getWhishlist(token))
+}, [wishlist])
+
+
+
+function renderFav () {
+ var url = window.location.href
+ var listaDeseos = wishlist.map(e=>e.producto._id)
+ var validateDeseo = listaDeseos.includes(id)
+    if(stock==='whishlist' && url === 'http://localhost:3000/whishlist') {
+      return (<IoIosCloseCircle className="eliminar_fav" onClick={()=>dispatch(deleteWhishlist(id,token))}/>)
+    }
+  if(user && !user.admin && stock!=='whishlist' && validateDeseo === true && url === 'http://localhost:3000/') {
+    return (<button className="add_fav_red" onClick={()=>dispatch(postWhishlist(id,token))}>♥</button>)
+  } else if(url === 'http://localhost:3000/' && validateDeseo === false){
+    return (<button className="add_fav_gris" onClick={()=>dispatch(postWhishlist(id,token))}>♥</button>)
+  }
+
+}
+
+
+
+
+
+
+
   return (
     
     <div className="libro">
-
-      {/* {stock==='whishlist' && <button onClick={()=>dispatch(deleteWhishlist(id,token))}>Eliminar</button>}
-      {user && !user.admin && stock!=='whishlist' &&<button onClick={()=>dispatch(postWhishlist(id,token))}>add Whishlist</button>} */}
+     {renderFav()}
       <NavLink style={{textDecoration:"none"}}className="libro_link" to={`/details/${id}`}>
       <div className="producto_descuento">
            {promo ? <p>Oferta</p>: null}
